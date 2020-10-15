@@ -45,7 +45,7 @@ set -x 2>$VERLOG
 scriptver=19
 branch=testing
 # Curl uses boringssl - first appeared in Marshmallow - don't try using ssl in older android versions
-[ -f $MODDIR/doh ] && flag=" --doh-url $(tail -n1 $MODDIR/doh)"
+[ -f $MODDIR/doh ] && { flag=" --doh-url $(tail -n1 $MODDIR/doh)"; doh="$(head -n1 $MODDIR/doh)"; }
 [ $API -lt 23 ] && alias curl="$MODDIR/curl -kLs$flag" || alias curl="$MODDIR/curl -Ls$flag"
 unset flag
 dir=`pwd`; bakloc=/data/local/ccbinsbackup
@@ -83,7 +83,7 @@ download_file() {
   if [ "$file" == "$MODDIR/.checksums" ]; then
     if [ ! -f "$file" ]; then
       echo "Checksums download failed!"
-      [ -f $MODDIR/doh ] && echo -e "Try deleting $MODDIR/doh\nor disabling your vpn"
+      [ "$doh" ] && echo -e "Try deleting $MODDIR/doh\nor disabling your vpn"
       quit
     elif [ "$(head -n1 "$file")" != "checksums.txt" ]; then
       echo "Checksums download failed!"
@@ -286,6 +286,9 @@ options_menu() {
   while true; do
     echo "$div"
     title_div "Options Menu"
+    echo "$div"
+    [ "$doh" ] && echo "Current DOH Server: $doh" || echo "Current DOH Server: None"
+    [ -f $MODDIR/doh ] && echo "Set DOH Server: $(head -n1 $MODDIR/doh)" || echo "Set DOH Server: None"
     echo "$div"
     echo "0: Go back to main menu"
     echo "1: Change install location"
@@ -662,7 +665,7 @@ while true; do
   title_div "Binary Installer"
   echo "Current install location: $insloc"
   $autoupdate && echo "Auto-update binaries at launch: Enabled (recommended)" || echo "Auto-update binaries at launch: Disabled"
-  [ -f $MODDIR/doh ] && echo "DOH Server: $(head -n1 $MODDIR/doh)" || echo "DOH Server: None"
+  [ "$doh" ] && echo "DOH Server: $doh" || echo "DOH Server: None"
   [ "$branch" == "master" ] || echo -e "$div\nCurrent branch: $branch"
   title_div "Choose option"
   echo "$div"
