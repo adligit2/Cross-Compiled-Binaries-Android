@@ -83,7 +83,7 @@ download_file() {
   if [ "$file" == "$MODDIR/.checksums" ]; then
     if [ ! -f "$file" ]; then
       echo "Checksums download failed!"
-      [ "$doh" ] && echo -e "Try deleting $MODDIR/doh\nor disabling your vpn"
+      [ "$doh" ] && echo -e "Try deleting $MODDIR/doh\n    or disabling your vpn"
       quit
     elif [ "$(head -n1 "$file")" != "checksums.txt" ]; then
       echo "Checksums download failed!"
@@ -663,10 +663,12 @@ echo " "
 while true; do
   echo "$div"
   title_div "Binary Installer"
+  echo "$div"
   echo "Current install location: $insloc"
   $autoupdate && echo "Auto-update binaries at launch: Enabled (recommended)" || echo "Auto-update binaries at launch: Disabled"
   [ "$doh" ] && echo "DOH Server: $doh" || echo "DOH Server: None"
-  [ "$branch" == "master" ] || echo -e "$div\nCurrent branch: $branch"
+  echo "$div"
+  [ "$branch" == "master" ] || echo -e "Current branch: $branch\n$div"
   title_div "Choose option"
   echo "$div"
   echo "0: Refresh CCbins (remove everything - start fresh)"
