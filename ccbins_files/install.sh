@@ -1,12 +1,12 @@
-filever=7
+filever=8
 download_file() {
   rm -f $MODPATH/dlerror
   local file="$1" url="$2"
   curl -o "$file" "$url"
   if [ "$file" == "$MODPATH/.checksums" ]; then
-    [ "$(head -n1 "$file")" == "checksums.txt" ] || { echo "Unable to download files!"; abort; }
+    [ "$(head -n1 "$file")" == "checksums.txt" ] || { ui_print "Unable to download files!"; abort; }
   else
-    grep -Fq "`md5sum "$file" | awk '{print $1}'`" $MODPATH/.checksums || { rm -f "$file"; touch $MODPATH/dlerror; echo "Download error for $file!"; }
+    grep -Fq "`md5sum "$file" | awk '{print $1}'`" $MODPATH/.checksums || { rm -f "$file"; touch $MODPATH/dlerror; ui_print "Download error for $file!"; }
   fi
 }
 
@@ -24,11 +24,11 @@ ui_print "- Downloading and installing needed files"
 download_file $MODPATH/.checksums https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/ccbins_files/checksums.txt
 for i in service.sh mod-util.sh "system/bin/ccbins"; do
   download_file $MODPATH/$i https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/ccbins_files/$(basename $i)
-  [ -f $MODPATH/dlerror ] && { echo "Unable to download files!"; abort; }
+  [ -f $MODPATH/dlerror ] && { ui_print "Unable to download files!"; abort; }
 done
 set_perm $MODPATH/system/bin/ccbins 0 0 0755
 
-if curl -I --connect-timeout 3 https://github.com/Magisk-Modules-Repo/busybox-ndk/raw/master/busybox-$ARCH-selinux | grep -q 'HTTP/.* 200' || ping -q -c 1 -W 1 $i.com >/dev/null; then
+if curl -I --connect-timeout 3 https://github.com/Magisk-Modules-Repo/busybox-ndk/raw/master/busybox-$ARCH-selinux | grep -q 'HTTP/.* 200' || ping -q -c 1 -W 1 $i.com >/dev/null 2>&1; then
   curl -o $MODPATH/busybox https://github.com/Magisk-Modules-Repo/busybox-ndk/raw/master/busybox-$ARCH-selinux
 else
   cp -f $MODPATH/busybox-$ARCH32 $MODPATH/busybox
