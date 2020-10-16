@@ -38,7 +38,7 @@ f525bb7ad7902b67f53c616b7791c5da  ccbins_files/ccbins
 7abd1ac07ede37dcaadb945e1256d0a2  ccbins_files/changelog.txt
 a6aa587b82c2cee85a86577512ee915a  ccbins_files/includes-dynamic.txt
 62eb07df6f544463965899181a99fdb6  ccbins_files/includes.txt
-f48c2d9c23d779df568295cb32adcbf4  ccbins_files/install.sh
+d8f52945beb45563944e0a26743ca2b7  ccbins_files/install.sh
 963b505462234b1966ab972143fc3899  ccbins_files/mod-util.sh
 10809822121b77f6511d409faea664b7  ccbins_files/module.prop
 ce46bcc37341c3ccc7c1cb07dfb1db9a  ccbins_files/service.sh

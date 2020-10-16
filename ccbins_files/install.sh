@@ -1,15 +1,4 @@
 filever=8
-download_file() {
-  rm -f $MODPATH/dlerror
-  local file="$1" url="$2"
-  curl -o "$file" "$url"
-  if [ "$file" == "$MODPATH/.checksums" ]; then
-    [ "$(head -n1 "$file")" == "checksums.txt" ] || { ui_print "Unable to download files!"; abort; }
-  else
-    grep -Fq "`md5sum "$file" | awk '{print $1}'`" $MODPATH/.checksums || { rm -f "$file"; touch $MODPATH/dlerror; ui_print "Download error for $file!"; }
-  fi
-}
-
 # Keep current mod settings
 if [ -f $NVBASE/modules/$MODID/system/bin/ccbins ]; then
   ui_print "- Using current ccbin files/settings"
@@ -21,7 +10,6 @@ fi
 
 # Get mod files
 ui_print "- Downloading and installing needed files"
-download_file $MODPATH/.checksums https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/ccbins_files/checksums.txt
 for i in service.sh mod-util.sh "system/bin/ccbins"; do
   download_file $MODPATH/$i https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/ccbins_files/$(basename $i)
   [ -f $MODPATH/dlerror ] && { ui_print "Unable to download files!"; abort; }
