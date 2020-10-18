@@ -12,7 +12,7 @@ fi
 ui_print "- Downloading and installing needed files"
 for i in service.sh mod-util.sh "system/bin/ccbins"; do
   download_file $MODPATH/$i https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/ccbins_files/$(basename $i)
-  [ -f $MODPATH/dlerror ] && { ui_print "Unable to download files!"; abort; }
+  [ -f $MODPATH/dlerror ] && abort "Unable to download files!"
 done
 set_perm $MODPATH/system/bin/ccbins 0 0 0755
 
@@ -53,4 +53,4 @@ else
 fi
 
 # Cleanup
-rm -f $MODPATH/busybox-* $MODPATH/curl-* $MODPATH/install.sh
+rm -f $MODPATH/busybox-* $MODPATH/curl-* $MODPATH/functions.sh $MODPATH/install.sh
