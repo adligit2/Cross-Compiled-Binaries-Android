@@ -90,7 +90,7 @@ download_file() {
       quit
     fi
   else
-    [ -f "$file" ] && grep -Fq "`md5sum "$file" | awk '{print $1}'`" $MODDIR/.checksums || { rm -f "$file"; touch $MODDIR/dlerror; echo "Download error for $file!"; }
+    [ -f "$file" ] && grep -Fwq "`md5sum "$file" | awk '{print $1}'`" $MODDIR/.checksums || { rm -f "$file"; touch $MODDIR/dlerror; echo "Download error for $file!"; }
   fi
 }
 
