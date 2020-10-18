@@ -2,6 +2,7 @@ filever=8
 # Keep current mod settings
 if [ -f $NVBASE/modules/$MODID/system/bin/ccbins ]; then
   ui_print "- Using current ccbin files/settings"
+  rm -f $NVBASE/modules/$MODID/.checksums
   cp -af $NVBASE/modules/$MODID/system $MODPATH
   cp -pf $NVBASE/modules/$MODID/.* $MODPATH 2>/dev/null
 else
