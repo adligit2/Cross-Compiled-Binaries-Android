@@ -357,7 +357,7 @@ remove_binary() {
 
 install_binary() {
   [ "$1" == "-s" ] && local spin=true || spin=false
-  [ "$file" == "$MODDIR/.binaries" ] && local url="https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/$ibinary" || local url="https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/$ibinary/dynamic"
+  [ "$file" == "$MODDIR/.binaries" ] && local url="https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/$ibinary" || local url="https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/$ibinary/dynamic"
   for i in $(grep -w $binary $file | awk '{print $3}' | sed "s/,/ /g"); do
     check_conflicts
     $spin && { download_file $MODDIR$insloc/$i $url/$i-$ARCH & e_spinner; } || download_file $MODDIR$insloc/$i $url/$i-$ARCH
@@ -395,7 +395,7 @@ install_ncursesw() {
   [ "$1" == "-u" ] && local update=true || local update=false
   $update && echo " - Updating NCursesw (`cat $MODDIR/.ncursesver` -> `cat $MODDIR/tmp`)" || echo " - Installing NCursesw v`cat $MODDIR/tmp`"
   mv -f $MODDIR/tmp $MODDIR/.ncursesver
-  download_file $MODDIR/system/ncursesw.zip https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/ncursesw/ncursesw-$ARCH.zip
+  download_file $MODDIR/system/ncursesw.zip https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/ncursesw/ncursesw-$ARCH.zip
   if [ ! -f $MODDIR/dlerror ]; then
     unzip -qod $MODDIR/system $MODDIR/system/ncursesw.zip
     rm -f $MODDIR/system/ncursesw.zip
@@ -408,7 +408,7 @@ install_ncursesw() {
 
 check_bin_updates() {
   echo -e "\nChecking for binary updates"
-  download_file $MODDIR/tmp https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/ncursesw/version.txt
+  download_file $MODDIR/tmp https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/ncursesw/version.txt
   [ -f $MODDIR/dlerror ] && { echo "Binary update check failed!"; return 0; }
   if [ ! -f $MODDIR/.ncursesver ]; then
     install_ncursesw 

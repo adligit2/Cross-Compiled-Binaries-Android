@@ -12,13 +12,13 @@ fi
 # Get mod files
 ui_print "- Downloading and installing needed files"
 for i in service.sh mod-util.sh "system/bin/ccbins"; do
-  download_file $MODPATH/$i https://github.com/Zackptg5/Cross-Compiled-Binaries-Android/raw/$branch/ccbins_files/$(basename $i)
+  download_file $MODPATH/$i https://raw.githubusercontent.com/Zackptg5/Cross-Compiled-Binaries-Android/$branch/ccbins_files/$(basename $i)
   [ -f $MODPATH/dlerror ] && abort "Unable to download files!"
 done
 set_perm $MODPATH/system/bin/ccbins 0 0 0755
 
-if curl -I --connect-timeout 3 https://github.com/Magisk-Modules-Repo/busybox-ndk/raw/master/busybox-$ARCH-selinux | grep -q 'HTTP/.* 200' || ping -q -c 1 -W 1 $i.com >/dev/null 2>&1; then
-  curl -o $MODPATH/busybox https://github.com/Magisk-Modules-Repo/busybox-ndk/raw/master/busybox-$ARCH-selinux
+if curl -I --connect-timeout 3 https://raw.githubusercontent.com/Magisk-Modules-Repo/busybox-ndk/master/busybox-$ARCH-selinux | grep -q 'HTTP/.* 200' || ping -q -c 1 -W 1 $i.com >/dev/null 2>&1; then
+  curl -o $MODPATH/busybox https://raw.githubusercontent.com/Magisk-Modules-Repo/busybox-ndk/master/busybox-$ARCH-selinux
 else
   cp -f $MODPATH/busybox-$ARCH32 $MODPATH/busybox
 fi
