@@ -168,12 +168,12 @@ list_installed() {
     echo "$div"
     grep -w $i $MODDIR/tmp | cut -d ' ' -f1-2,4
   done
-  echo -e "\nPress 1 to continue"
+  echo -e "\nPress 0 to continue"
   while true; do
     read -r choice?'--> '
     echo " "
     case $choice in
-      1) break;;
+      0) break;;
       q) quit;;
       *) echo "Invalid option! Try again";;
     esac
@@ -194,12 +194,12 @@ info() {
   echo "You'll want to install binaries to the lowest priority location unless you want to overwrite any existing ones"
   echo "Running 'echo \$PATH' will show you the priority with highest being first"
   echo "Vendor is typically lowest and product is typically highest (if present)"
-  echo -e "\nPress 1 to continue"
+  echo -e "\nPress 0 to continue"
   while true; do
     read -r choice?'--> '
     echo " "
     case $choice in
-      1) break;;
+      0) break;;
       q) quit;;
       *) echo "Invalid option! Try again";;
     esac
@@ -370,9 +370,9 @@ install_binary() {
         $spin && { download_file $MODDIR/$i.zip $url/$i.zip & e_spinner; } || download_file $MODDIR/$i.zip $url/$i.zip
         [ -f $MODDIR/dlerror ] && { sed -i "\|$binary.*$insloc|d" $MODDIR/.installed; remove_binary; return 1; }
         unzip -qod $MODDIR/system $MODDIR/$i.zip
-        for i in $(unzip -l $MODDIR/$i.zip | awk '{print $4}' | sed -e '/^$/d' -e '/^Name$/d' -e '/^----$/d' -e '/\/$/d'); do
-          echo $i >> $MODDIR/.$ibinary
-          set_perm $MODDIR/system/$i 0 2000 0644
+        for j in $(unzip -l $MODDIR/$i.zip | awk '{print $4}' | sed -e '/^$/d' -e '/^Name$/d' -e '/^----$/d' -e '/\/$/d'); do
+          echo $j >> $MODDIR/.$ibinary
+          set_perm $MODDIR/system/$j 0 2000 0644
         done
         rm -f $MODDIR/$i.zip
       else
@@ -705,12 +705,12 @@ while true; do
        title_div "Downloadable Binaries: "
        echo "$div"
        echo "Static:"; cat $MODDIR/.binaries | awk '{print $1 " " $2}'; echo " "; echo "Dynamic:"; cat $MODDIR/.binaries-dynamic | awk '{print $1 " " $2}'; echo " "
-       echo -e "\nPress 1 to continue"
+       echo -e "\nPress 0 to continue"
        while true; do
          read -r choice?'--> '
          echo " "
          case $choice in
-           1) break;;
+           0) break;;
            q) quit;;
            *) echo "Invalid option! Try again";;
          esac
