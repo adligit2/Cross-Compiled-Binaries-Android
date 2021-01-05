@@ -37,7 +37,6 @@ This repo contains a variety of binaries cross compiled for android with Android
 
 ## Credits
 * [Aria2](https://github.com/aria2/aria2)
-* [Astron](https://github.com/file/file)
 * [Daniel Stenberg](https://curl.haxx.se)
 * [GNU](https://www.gnu.org/software)
 * [Google](https://github.com/google/brotli)

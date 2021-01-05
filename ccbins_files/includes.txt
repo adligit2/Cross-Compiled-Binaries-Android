@@ -7,7 +7,6 @@ Cpio (v2.12) cpio
 Curl (v7.72.0) curl
 Diffutils (v3.7) cmp,diff3,diff,sdiff
 Ed (v1.16) ed,red
-File (v5.39) file
 Findutils (v4.7.0) find,frcode,locate,updatedb,xargs
 Gawk (v5.1.0) gawk
 Grep (v3.6) egrep,fgrep,grep
