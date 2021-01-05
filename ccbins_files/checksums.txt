@@ -88,10 +88,6 @@ fe98b29e76a6963728e28ee6ca14e7ae  ed/ed-x64
 7ee1c42c8afd7a5fb6cccc6fa45c08de  ed/red-arm64
 7ee1c42c8afd7a5fb6cccc6fa45c08de  ed/red-x64
 7ee1c42c8afd7a5fb6cccc6fa45c08de  ed/red-x86
-105ef0d7484042f6e091dc41c92327a1  file/file-arm
-69f49fb5778952e10d1583e45de07d19  file/file-arm64
-ae97dce1db0ea2950eecedaca8389f43  file/file-x64
-3c006ba208aae3ac9993efb8e360aa0c  file/file-x86
 f58bb19df4df0304a0052ab6ed10e2ef  findutils/find-arm
 66373cbc380481b31bde495dcac68ea0  findutils/find-arm64
 70edd1e4cde52ec55401c6dc364571da  findutils/find-x64
