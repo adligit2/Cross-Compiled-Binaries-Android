@@ -11,7 +11,7 @@ You can find the build script for these in the build_scripts folder. You can fin
 * Brotli (v1.0.9)
 * Coreutils (v8.32) - has selinux support, openssl support, and includes patches for advanced cp/mv (adds progress bar functionality)
 * Cpio (v2.12)
-* Curl (v7.72.0) - boringssl support and more - working ssl, requires root, dynamic has most features
+* Curl (v7.74.0) - boringssl support and more - working ssl, requires root, dynamic has most features
 * Diffutils (v3.7)
 * Ed (v1.17)
 * Exa (v0.9.0) - dynamic only
