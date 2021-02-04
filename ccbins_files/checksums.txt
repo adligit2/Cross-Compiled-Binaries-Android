@@ -214,11 +214,11 @@ cde84b9ad8fa975f79ef72676d9c98fa  nano/nano-arm
 cde84b9ad8fa975f79ef72676d9c98fa  nano/nano-arm64
 cde84b9ad8fa975f79ef72676d9c98fa  nano/nano-x64
 cde84b9ad8fa975f79ef72676d9c98fa  nano/nano-x86
-26092e9464d3ff50df64cc3939445ab8  nano/nano.bin-arm
-5a87d04e9decec69bbdeb53830bd63e1  nano/nano.bin-arm64
-1b6cc2196a94b22922820c8637856c6e  nano/nano.bin-x64
-827d9033b1c52f0f83f7d0098498fc0d  nano/nano.bin-x86
-b50977c737cbc8e4e6556341f7cacf33  nano/usr.zip
+6e517b086e828a23cd840fcb5d54c4b1  nano/nano.bin-arm
+d3011f1c1789d33165ceed32b9a521dc  nano/nano.bin-arm64
+ebe34a211d224adf5c5cdbb684147872  nano/nano.bin-x64
+f8ad9c2f55056c94966a9ed1f6f81896  nano/nano.bin-x86
+88348b4d10ea1a320ab4a3c60788fdc3  nano/usr.zip
 d1b7c815ded3e603cbf530988ad42997  ncursesw/ncursesw-arm.zip
 362e93943a0e0da8a011adb5cd9803a2  ncursesw/ncursesw-arm64.zip
 48c40aa914970d3c5111bbf6f8eb070a  ncursesw/ncursesw-x64.zip
