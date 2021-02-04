@@ -796,11 +796,12 @@ for LBIN in $BIN; do
       elif [ "$LBIN" == "nano" ]; then
         make install DESTDIR=$PREFIX
         $STRIP $PREFIX/system/bin/nano
-        mv -f $PREFIX/system/bin/nano $PREFIX/system/bin/nano.bin
-        cp -f $DIR/nano_wrapper $PREFIX/system/bin/nano
+        # mv -f $PREFIX/system/bin/nano $PREFIX/system/bin/nano.bin
+        # cp -f $DIR/nano_wrapper $PREFIX/system/bin/nano
         rm -rf $PREFIX/system/usr/share/nano
         git clone https://github.com/scopatz/nanorc $PREFIX/system/usr/share/nano
-        rm -rf $PREFIX/system/usr/share/nano/.* $PREFIX/system/usr/share/nano/AUTHORS.txt 2>/dev/null
+        rm -rf $PREFIX/system/usr/share/nano/.git
+        find $PREFIX/system/usr/share/nano -type f ! -name '*.nanorc' -delete
       elif [ "$LBIN" == "zsh" ]; then
         make install -j$JOBS DESTDIR=$PREFIX
         ! $STATIC && [ "$LBIN" == "zsh" ] && [ "$LARCH" == "aarch64" -o "$LARCH" == "x86_64" ] && mv -f $DEST/$LARCH/lib $DEST/$LARCH/lib64

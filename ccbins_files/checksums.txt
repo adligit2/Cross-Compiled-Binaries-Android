@@ -214,7 +214,7 @@ a16d4cded54cedd5ff9e87addd9a6f12  keycheck/keycheck-x86
 d3011f1c1789d33165ceed32b9a521dc  nano/nano-arm64
 ebe34a211d224adf5c5cdbb684147872  nano/nano-x64
 f8ad9c2f55056c94966a9ed1f6f81896  nano/nano-x86
-88348b4d10ea1a320ab4a3c60788fdc3  nano/usr.zip
+0cdf528b90d53f47ed478347351604b7  nano/usr.zip
 d1b7c815ded3e603cbf530988ad42997  ncursesw/ncursesw-arm.zip
 362e93943a0e0da8a011adb5cd9803a2  ncursesw/ncursesw-arm64.zip
 48c40aa914970d3c5111bbf6f8eb070a  ncursesw/ncursesw-x64.zip
