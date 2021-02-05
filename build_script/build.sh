@@ -8,7 +8,7 @@ echogreen () {
 usage () {
   echo " "
   echored "USAGE:"
-  echogreen "BIN=      (Valid options are: bash, bc, coreutils, cpio, diffutils, ed, exa, findutils, gawk, grep, gzip, htop, iftop, nano, ncurses, nethogs, openssl, patch, patchelf, sed, sqlite, strace, tar, tcpdump, vim, zsh, zstd)"
+  echogreen "BIN=      (Valid options are: bash, bc, coreutils, cpio, diffutils, ed, exa, findutils, gawk, grep, gzip, htop, iftop, nano, ncurses, nethogs, openssl, patch, patchelf, sed, sqlite, strace, tar, tcpdump, vim, wavemon, zsh, zstd)"
   echogreen "ARCH=     (Default: all) (Valid Arch values: all, arm, arm64, aarch64, x86, i686, x64, x86_64)"
   echogreen "STATIC=   (Default: true) (Valid options are: true, false)"
   echogreen "API=      (Default: 21 for dynamic, 30 for static) (Valid options are: 21, 22, 23, 24, 26, 27, 28, 29, 30)"
@@ -398,7 +398,7 @@ for LBIN in $BIN; do
     "iftop") ext=gz; ver="0.17"; ver="1.0pre4"; [ $LAPI -lt 23 ] && LAPI=28;;
     "nano") ext=xz; ver="5.5";;
     "ncurses") ver="$NVER"; DEP=true;;
-    "nethogs") ver="v0.8.6"; url="https://github.com/raboof/nethogs";;
+    "nethogs") ver="v0.8.6"; url="https://github.com/raboof/nethogs"; $STATIC || [ $LAPI -ge 26 ] || LAPI=26;;
     "openssl") ver="$OVER"; DEP=true;;
     "patch") ext=xz; ver="2.7.6";;
     "patchelf") ver="0.12"; url="https://github.com/NixOS/patchelf";;
@@ -406,8 +406,9 @@ for LBIN in $BIN; do
     "sqlite") ext=gz; ver="3340100";;
     "strace") ver="v5.10"; url="https://github.com/strace/strace";; # Recommend v5.5 for arm64
     "tar") ext=xz; ver="1.33"; ! $STATIC && [ $LAPI -lt 28 ] && LAPI=28;;
-    "tcpdump") ver="tcpdump-4.99.0"; url="https://github.com/the-tcpdump-group/tcpdump";;
+    "tcpdump") ver="tcpdump-4.99.0"; url="https://github.com/the-tcpdump-group/tcpdump"; $STATIC || [ $LAPI -ge 26 ] || LAPI=26;;
     "vim") url="https://github.com/vim/vim";;
+    "wavemon") ver="v0.9.3"; url="https://github.com/uoaerg/wavemon"; $STATIC || [ $LAPI -ge 26 ] || LAPI=26;;
     "zsh") ext=xz; ver="5.8";;
     "zstd") ver="v1.4.8"; url="https://github.com/facebook/zstd";;
     *) echored "Invalid binary specified!"; usage;;
@@ -482,11 +483,15 @@ for LBIN in $BIN; do
     # 3) Bionic error fix in NDK
     # 4) New syscall function has been added in coreutils 8.32 - won't compile with android toolchains - fix only needed for 64bit arch's oddly enough
     # 5) Coreutils doesn't detect pcre2 related functions for whatever reason - ignore resulting errors - must happen for coreutils only (after gnulib)
-    # 6) Expects ncurses in different location, make what's essentially a symlink to real one
+    # 6) Fix ncurses location issues
     # 7) Can't detect pthread from ndk so clear any values set by configure
     # 8) pthread_cancel not in ndk, use Hax4us workaround found here: https://github.com/axel-download-accelerator/axel/issues/150
     # 9) Allow static compile (will compile dynamic regardless of flags without this patch), only needed for arm64 oddly
     # 10) Specify that ncursesw is defined since clang errors out with ncursesw
+    # 11) Add needed include
+    # 12) Remove ether_ntohost - not present in ndk
+    # 13) pthread_create not detected for some reason, just force it through
+    # 14) Fix libnl/libm order (libnl should be before libm)
     echogreen "Configuring for $LARCH"
     case $LBIN in
       "bash")
@@ -743,6 +748,22 @@ for LBIN in $BIN; do
         vim_cv_toupper_broken=no \
         vim_cv_tty_group=world
         ;;
+      "wavemon")
+        build_ncurses -w
+        build_libpcap
+        sed -i -e "s/ncurses.h //" -e "s/ ether_ntohost//" configure.ac #6,12
+        ./config/bootstrap # Recreate configure with changes above
+        cp -f $DIR/Bpthread.h . #8
+        sed -i '/#include <stdio.h>/i#include "Bpthread.h"' wavemon.h #8
+        sed -i '/#include <stdbool.h>/a#include <net/ethernet.h>' iw_nl80211.h #11
+        sed -i '/ether_ntohost/,/return hostname/d' utils.c #12
+        patch_file $DIR/wavemon.patch #6
+        sed -i -e 's/uninstall //' -e 's/@LIBS@ @LIBNL3_LIBS@/@LIBNL3_LIBS@ @LIBS@/' Makefile.in # Prevent output from getting deleted with distclean, #14
+        ./configure CFLAGS="$CFLAGS -I$NPREFIX/include -I$LNPREFIX/include -I$LPREFIX/include" LDFLAGS="$LDFLAGS -L$NPREFIX/lib -L$LNPREFIX/lib -L$LPREFIX/lib" CPPFLAGS="$CFLAGS -I$NPREFIX/include -I$LNPREFIX/include -I$LPREFIX/include" \
+        --host=$target_host --target=$target_host \
+        $FLAGS--prefix=$PREFIX \
+        ac_cv_lib_pthread_pthread_create=yes #13
+        ;;
       "zsh")
         build_pcre
         build_gdbm
@@ -796,12 +817,11 @@ for LBIN in $BIN; do
       elif [ "$LBIN" == "nano" ]; then
         make install DESTDIR=$PREFIX
         $STRIP $PREFIX/system/bin/nano
-        # mv -f $PREFIX/system/bin/nano $PREFIX/system/bin/nano.bin
-        # cp -f $DIR/nano_wrapper $PREFIX/system/bin/nano
-        rm -rf $PREFIX/system/usr/share/nano
-        git clone https://github.com/scopatz/nanorc $PREFIX/system/usr/share/nano
-        rm -rf $PREFIX/system/usr/share/nano/.git
-        find $PREFIX/system/usr/share/nano -type f ! -name '*.nanorc' -delete
+        #mv -f $PREFIX/system/bin/nano $PREFIX/system/bin/nano.bin
+        #cp -f $DIR/nano_wrapper $PREFIX/system/bin/nano
+        #rm -rf $PREFIX/system/usr/share/nano
+        git clone https://github.com/scopatz/nanorc $PREFIX/system/usr/share/nano2
+        #rm -rf $PREFIX/system/usr/share/nano/.* $PREFIX/system/usr/share/nano/AUTHORS.txt 2>/dev/null
       elif [ "$LBIN" == "zsh" ]; then
         make install -j$JOBS DESTDIR=$PREFIX
         ! $STATIC && [ "$LBIN" == "zsh" ] && [ "$LARCH" == "aarch64" -o "$LARCH" == "x86_64" ] && mv -f $DEST/$LARCH/lib $DEST/$LARCH/lib64

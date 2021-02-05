@@ -50,6 +50,7 @@ The below table notes if the binary is compatible with android ndk. If static or
 | **tar**       | Yes       | |
 | **tcpdump**   | Yes       | |
 | **vim**       | Yes       | |
+| **wavemon**   | Yes       | |
 | **zsh**       | Yes       | |
 | **zstd**      | Yes       | |
 
