@@ -33,7 +33,7 @@ You can find the build script for these in the build_scripts folder. You can fin
 * Sqlite3 (v3.34.1) - dynamic only
 * Strace (v5.5)
 * Tar (v1.33)
-* Tcpdump (v4.9.3 static, v4.99.0 dynamic)
+* Tcpdump (v4.99.0) - dynamic has openssl support
 * Vim (v8.2.2445)
 * Wavemon (v0.9.3) - note that your kernel must have wireless extensions enabled (which most android ones don't). [See here](https://github.com/uoaerg/wavemon#dependencies) [and here](https://github.com/uoaerg/wavemon/blob/master/wavemon.1#L129) for more details
 * Xmlstarlet
