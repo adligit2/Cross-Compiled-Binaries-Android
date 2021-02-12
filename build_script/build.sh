@@ -97,8 +97,8 @@ build_bin() {
   case $arch in
     arm64|aarch64) arch=aarch64; target_host=aarch64-linux-android; osarch=android-arm64; barch=arm64-v8a;;
     arm) arch=arm; target_host=arm-linux-androideabi; osarch=android-arm; barch=armeabi-v7a;;
-    x64|x86_64) arch=x86_64; target_host=x86_64-linux-android; osarch=android-x86_64; barch=x86;;
-    x86|i686) arch=i686; target_host=i686-linux-android; osarch=android-x86; barch=x86_64; flags="TIME_T_32_BIT_OK=yes ";;
+    x64|x86_64) arch=x86_64; target_host=x86_64-linux-android; osarch=android-x86_64; barch=x86_64;;
+    x86|i686) arch=i686; target_host=i686-linux-android; osarch=android-x86; barch=x86; flags="TIME_T_32_BIT_OK=yes ";;
     *) echored "Invalid arch: $arch!"; exit 1;;
   esac
   export AR=$target_host-ar
