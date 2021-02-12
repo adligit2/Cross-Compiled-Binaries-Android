@@ -26,7 +26,7 @@
 # 23) googletest dependency is not present in the aosp source version
 # 24) Remove no longer supported macro (needed for newer version of autoconf)
 # 25) Pthread inside ndk's libc rather than separate, create empty one to skirt around errors - https://stackoverflow.com/questions/57289494/ndk-r20-ld-ld-error-cannot-find-lpthread
-# 26) Add missing functions (present in openssl but not in boringssl) - modified from original source: https://github.com/egorovandreyrm/libssh_android_build_scripts
+# 26) Add support for boringssl AES-CTR (see here: https://fuchsia-review.googlesource.com/c/third_party/libssh2/+/23460/1/src/openssl.c#417) and add missing functions (present in openssl but not in boringssl) - modified from original source: https://github.com/egorovandreyrm/libssh_android_build_scripts
 # 27) Quiche needs libdl and libmath libs specified and the configure arg pointed to the pkgconfig file location
 
 echored () {
@@ -222,7 +222,6 @@ build_bin() {
       build_bin c-ares
       build_bin libssh2 # Also builds openssl
       build_bin sqlite
-      build_bin zlib
       cd $dir/$bin
       autoreconf -fi
       if $static; then #25
@@ -233,7 +232,7 @@ build_bin() {
         LDFLAGS="$LDFLAGS -static-libstdc++"
         flags="ARIA2_STATIC=yes $flags"
       fi
-      ./configure CFLAGS="$CFLAGS -g -I$prefix/include" LDFLAGS="$LDFLAGS -L$prefix/lib" CXXFLAGS="$CFLAGS" CPPFLAGS="$CFLAGS" PKG_CONFIG_LIBDIR="$prefix/lib/pkgconfig" \
+      ./configure CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS -g -I$prefix/include -DANDROID" LDFLAGS="$LDFLAGS -L$prefix/lib" \
         --host=$target_host --target=$target_host \
         $flags--prefix=$prefix \
         --disable-nls \
@@ -278,14 +277,15 @@ build_bin() {
       cp -rf googletest-release-1.10.0/googletest third_party
       rm -rf release-1.10.0.tar.gz googletest-release-1.10.0
       $static && flags="-DCMAKE_EXE_LINKER_FLAGS='-static' "
-      mkdir -p build/$arch
-      cd build/$arch/
+      mkdir -p build
+      cd build
       cmake -DANDROID_ABI=$barch \
         -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
         -DANDROID_NATIVE_API_LEVEL=$lapi \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=$prefix \
         -DBUILD_SHARED_LIBS=0 \
-        $flags-GNinja $PWD/../..
+        $flags-GNinja ..
       ninja
       ;;
     "brotli")
@@ -299,11 +299,21 @@ build_bin() {
       sed -i -e '/# To assist in cross-compiling/,/RANLIB=/d' -e "s/LDFLAGS=/LDFLAGS=$LDFLAGS /" -e "s/CFLAGS=/CFLAGS=$CFLAGS /" -e "s|^PREFIX=.*|PREFIX=$prefix|" -e 's/bzip2recover test/bzip2recover/' Makefile
       ;;
     "c-ares")
-      $static && flags="--disable-shared $flags"
-      autoreconf -fi
-      ./configure CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS" \
-        --host=$target_host --target=$target_host \
-        $flags--prefix=$prefix
+      # $static && flags="--disable-shared $flags"
+      # autoreconf -fi
+      # ./configure CFLAGS="$CFLAGS" CPPFLAGS="-DANDROID" LDFLAGS="$LDFLAGS" \
+      #   --host=$target_host --target=$target_host \
+      #   $flags--prefix=$prefix
+      $static && flags="-DCARES_STATIC=1 -DCARES_SHARED=0 $flags" || flags="-DCARES_STATIC=1 $flags"
+      mkdir build
+      cd build
+      cmake -DANDROID_ABI=$barch \
+        -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
+        -DANDROID_NATIVE_API_LEVEL=$lapi \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=$prefix \
+        $flags-GNinja ..
+      ninja
       ;;
     "coreutils")
       build_bin openssl
@@ -347,7 +357,7 @@ build_bin() {
       sed -i "s/Release-Date/Build-Date/g" src/tool_help.c
       $static && flags="--disable-shared $flags"
       autoreconf -fi
-      ./configure CFLAGS="$CFLAGS" CPPFLAGS="$CFLAGS -I$prefix/include" LDFLAGS="$LDFLAGS -L$prefix/lib" LIBS="-lidn2 -lunistring -ldl -lm" \
+      ./configure CFLAGS="$CFLAGS" CPPFLAGS="$CFLAGS -I$prefix/include -DANDROID" LDFLAGS="$LDFLAGS -L$prefix/lib" LIBS="-lidn2 -lunistring -ldl -lm" \
         --host=$target_host --target=$target_host \
         $flags--prefix=$prefix \
         --enable-optimize \
@@ -367,7 +377,7 @@ build_bin() {
         --with-libssh2=$prefix \
         --with-quiche=$prefix/lib/pkgconfig #27
       [ $? -eq 0 ] || { echored "Configure failed!"; exit 1; }
-      sed -i -e "s/#define OS .*/#define OS \"Android\"/" -e "s/#define SELECT_TYPE_RETV int/#define SELECT_TYPE_RETV ssize_t/" -e "s|/\* #undef _FILE_OFFSET_BITS \*/|#define _FILE_OFFSET_BITS 64|" lib/curl_config.h
+      sed -i -e "s/#define OS .*/#define OS \"ANDROID\"/" -e "s/#define SELECT_TYPE_RETV int/#define SELECT_TYPE_RETV ssize_t/" -e "s|/\* #undef _FILE_OFFSET_BITS \*/|#define _FILE_OFFSET_BITS 64|" lib/curl_config.h
       $static && flags=" curl_LDFLAGS=-all-static" || flags=""
       ;;
     "diffutils")
@@ -522,11 +532,11 @@ build_bin() {
       if $alt; then
         build_bin boringssl
         cp -f $dir/patches/ssh-boringssl-compat.c $dir/libssh2/src/ssh-boringssl-compat.c #26
-        grep -q 'ssh-boringssl-compat.c' $dir/libssh2/src/openssl.c || sed -i '/#include "libssh2_priv.h"/a#include "ssh-boringssl-compat.c"' $dir/libssh2/src/openssl.c #26
       else
         build_bin openssl
       fi
       cd $dir/$bin
+      patch_file $dir/patches/$bin.patch #26
       sed -i '/m4_undefine/d' configure.ac #24
       ./buildconf
       ./configure CFLAGS="$CFLAGS -I$prefix/include" LDFLAGS="$LDFLAGS -L$prefix/lib" \
@@ -797,8 +807,11 @@ build_bin() {
     case "$bin" in
       "boringssl") mkdir -p $prefix/lib
                    cp -f ssl/libssl.a crypto/libcrypto.a decrepit/libdecrepit.a $prefix/lib/
-                   cp -rf $PWD/../../include $prefix/
+                   cp -rf ../include $prefix/
                    ;;
+      "c-ares") ninja install
+                $static || cp $prefix/lib/libcares_static.a $prefix/lib/libcares.a
+                ;;
       "curl") make$flags install -j$jobs
               [ $? -eq 0 ] || { echored "Build failed!"; exit 1; }
               make clean
@@ -849,7 +862,7 @@ build_bin() {
     fi
   fi
   if [[ "$url" == "https://github.com/"* ]] || [[ "$url" == *"googlesource.com"* ]]; then
-    # git reset --hard 2>/dev/null
+    git reset --hard 2>/dev/null
     git clean -dxf 2>/dev/null
   fi
   $STRIP $prefix/*bin/* 2>/dev/null
