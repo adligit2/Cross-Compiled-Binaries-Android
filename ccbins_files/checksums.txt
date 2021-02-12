@@ -52,9 +52,9 @@ e600594074f2655d29a086b9cee8bfcc  coreutils/coreutils-arm64
 bbb4d7d79879137d93a3c5ef22f86022  cpio/cpio-x64
 348fbe7ce9a6c9137c4252a364e9b0fc  cpio/cpio-x86
 fa6602c61756f6085cae65b6713addd5  curl/curl-arm
-293d21e910f07b1c8f05c00fc63cb110  curl/curl-arm64
-c16a3441a3812ec5cbfe9072beab3ca5  curl/curl-x64
-09ec90182176f1e196f642a8e92ce8f2  curl/curl-x86
+94b3e217bd9ccaf74ac4d5d212fc3557  curl/curl-arm64
+b6d7cc76e4c8de4801c147d26adc9f25  curl/curl-x64
+f7caeb5330f63fb0eace689c93f4c074  curl/curl-x86
 8713c109dd816f0688a2a5960e985155  diffutils/cmp-arm
 a813d52475893fd5d13d2206178cdab8  diffutils/cmp-arm64
 313d6c59b92745c403ade437f16d43a1  diffutils/cmp-x64
