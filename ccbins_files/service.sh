@@ -16,8 +16,8 @@ if ! grep -q 'alias curl=' /storage/emulated/0/.aliases 2>/dev/null || ! grep -q
     dnsrvs="$dnsrvs,$j"
   done
   dnsrvs="$(echo "$dnsrvs" | sed 's/^,//')"
-  grep -q 'alias curl=' /storage/emulated/0/.aliases 2>/dev/null || echo "alias curl='curl --dns-servers $dnsrvs \"\$@\"" >> /storage/emulated/0/.aliases
-  grep -q 'alias aria2c=' /storage/emulated/0/.aliases 2>/dev/null || echo "alias aria2c='aria2c --async-dns-servers=$dnsrvs \"\$@\"" >> /storage/emulated/0/.aliases
+  grep -q 'alias curl=' /storage/emulated/0/.aliases 2>/dev/null || echo "alias curl='curl --dns-servers $dnsrvs \"\$@\"'" >> /storage/emulated/0/.aliases
+  grep -q 'alias aria2c=' /storage/emulated/0/.aliases 2>/dev/null || echo "alias aria2c='aria2c --async-dns-servers=$dnsrvs \"\$@\"'" >> /storage/emulated/0/.aliases
 fi
 if [ -f $MODPATH/system/etc/zsh/.zshrc ] && [ ! -f /storage/emulated/0/.zsh/.zshrc ]; then
   mkdir -p /storage/emulated/0/.zsh 2>/dev/null
