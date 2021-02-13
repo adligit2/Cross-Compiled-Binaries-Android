@@ -68,7 +68,7 @@ if [ "$(pm list packages com.wireguard.android)" ] && [ "$(wg show)" ]; then
   wgint="$(wg show | grep 'interface' | sed 's/interface: //')"
   # Initial log/output from starting a tunnel is only surefire way to get the dns addresses to my knowledge
   for i in $wgint; do
-    wg-quick down $i; wg-quick up $i | tee $MODDIR/tmp
+    wg-quick down $i >/dev/null; wg-quick up $i | tee $MODDIR/tmp >/dev/null
     j="$(grep setResolverConfiguration $MODDIR/tmp | awk -F '[()]' '{print $2}' | cut -d '[' -f2 | cut -d ']' -f1 | sed 's/ //g')"
     [ "$j" ] && dnsrvs="$dnsrvs,$j"
     j="$(grep setResolverConfiguration $MODDIR/tmp | awk -F '[()]' '{print $2}' | cut -d '[' -f3 | cut -d ']' -f1 | sed 's/ //g')"
