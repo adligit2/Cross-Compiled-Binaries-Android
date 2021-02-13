@@ -5,7 +5,7 @@ This repo contains a variety of binaries cross compiled for android with Android
 You can find the build script for these in the [build_scripts folder](build_script).
 
 ## Currently includes:
-* Aria2 (v1.35.0) - dynamic has most features and works without need for root
+* Aria2 (v1.35.0) - to use without root, use `--async-dns --async-dns-server=<yourdnserver,yourotherdnsserver>`
 * Bash (v5.1.4)
 * Bc (v1.07.1)
 * Brotli (v1.0.9)
@@ -33,7 +33,7 @@ You can find the build script for these in the [build_scripts folder](build_scri
 * Sqlite3 (v3.34.1) - dynamic only
 * Strace (v5.5)
 * Tar (v1.33)
-* Tcpdump (v4.99.0) - dynamic has openssl support
+* Tcpdump (v4.99.0)
 * Vim (v8.2.2445)
 * Wavemon (v0.9.3) - note that your kernel must have wireless extensions enabled (which most android ones don't). [See here](https://github.com/uoaerg/wavemon#dependencies) [and here](https://github.com/uoaerg/wavemon/blob/master/wavemon.1#L129) for more details
 * Xmlstarlet
