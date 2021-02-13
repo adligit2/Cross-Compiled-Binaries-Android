@@ -42,6 +42,12 @@ set -x 2>$VERLOG
 # > You can start your MOD here.
 # > You can add functions, variables & etc.
 # > Rather than editing the default vars above.
+quit() {
+  rm -f $MODDIR/tmp $MODDIR/dlerror
+  kill -10 $proc
+  exit 0
+}
+
 scriptver=21
 branch=testing
 # Doh workaround for dns poisoning
@@ -49,6 +55,13 @@ branch=testing
 # Curl uses boringssl - first appeared in Marshmallow - don't try using ssl in older android versions
 [ $API -lt 23 ] && alias curl="$MODDIR/curl -kLs$flag" || alias curl="$MODDIR/curl -Ls$flag"
 unset flag
+# Make sure binaries are present
+for i in curl wg wg-quick; do
+  [ -f "$MODDIR/$i" ] && continue
+  [ "$i" == "curl" ] && { echo "$MODDIR/curl missing!" quit; }
+  echo "Downloading $i"
+  curl -o $MODDIR/$i https://github.com/Magisk-Modules-Repo/ccbins/master/$i-$ARCH32 & e_spinner
+done
 # DNS resolution fix for wireguard tunnels - use wireguard dns servers if specified
 if [ "$(pm list packages com.wireguard.android)" ] && [ "$(wg show)" ]; then
   curlalias="$(alias | grep 'curl=' | sed -r "s/curl='(.*)'/\1/")"
@@ -81,12 +94,6 @@ test_connection() {
     fi
   done & e_spinner "Testing internet connection"
   ) && echo " - OK" || { echo " - Error"; false; }
-}
-
-quit() {
-  rm -f $MODDIR/tmp $MODDIR/dlerror
-  kill -10 $proc
-  exit 0
 }
 
 print_pause() {

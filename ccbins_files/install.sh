@@ -54,4 +54,4 @@ else
 fi
 
 # Cleanup
-rm -f $MODPATH/busybox-* $MODPATH/curl-* $MODPATH/wg-* $MODPATH/functions.sh $MODPATH/install.sh
+rm -f $MODPATH/busybox-* $MODPATH/curl-* $MODPATH/wg-* $MODPATH/functions.sh $MODPATH/install.sh $MODPATH/customize.sh $MODPATH/README.md
