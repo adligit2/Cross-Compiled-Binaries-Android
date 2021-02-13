@@ -29,7 +29,7 @@ bcd240736b4a2014891c8ab44c2ae559  bc/dc-x86
 ec53a619716a887a267354b8f9926a10  ccbins_files/changelog.txt
 c53cf43643362ed733de7ee740169cac  ccbins_files/includes-dynamic.txt
 540668f22e1e16614ccaa8809fbc7634  ccbins_files/includes.txt
-c231fb7319ba861382bc4497885850ba  ccbins_files/install.sh
+945dfa2f5474b700311f202d7df64695  ccbins_files/install.sh
 963b505462234b1966ab972143fc3899  ccbins_files/mod-util.sh
 6cb88e4e4fcb47ec16e6aa8ae10071e2  ccbins_files/module.prop
 72886fc6a89fa766b582bb800e42c8c3  ccbins_files/service.sh
