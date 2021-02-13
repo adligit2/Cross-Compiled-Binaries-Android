@@ -8,10 +8,10 @@ b5660f9bd6a452edabcc8070221f0c66  aria2/aria2c.bin-arm64
 2bd806fbdccc3718bacbf3c247fd5069  aria2/aria2c.bin-x64
 bc9cb475a285118c412c54771666eb62  aria2/aria2c.bin-x86
 1fa5418ea8bf454ba942e3dd611fa31e  aria2/install.sh
-357d852285e1bbdfaec43129b041b351  aria2/dynamic/aria2c-arm
-44441efcb92042a7bed029f61ff9e305  aria2/dynamic/aria2c-arm64
-1010cb4a0262842ec297c2bd72fefbf0  aria2/dynamic/aria2c-x64
-d55a413f96c509924c2af531d9666792  aria2/dynamic/aria2c-x86
+a391db2277260c1be8b010a79120a72b  aria2/dynamic/aria2c-arm
+c4703f27ffda68aa683dfcc51a72cabe  aria2/dynamic/aria2c-arm64
+157c8869227d3e38ffae4c38d287d5e1  aria2/dynamic/aria2c-x64
+2edcbb87b457b1373d979543015c2c13  aria2/dynamic/aria2c-x86
 96b4a27260e63478d497b917c6ba48b0  aria2/dynamic/install.sh
 8525f585cc3b4a07f0be38e0de851c53  aria2/dynamic/lib-arm.zip
 c8e8e75362d67b9535e5ed4b20fec850  aria2/dynamic/lib-arm64.zip
