@@ -58,9 +58,9 @@ unset flag
 # Make sure binaries are present
 for i in curl wg wg-quick; do
   [ -f "$MODDIR/$i" ] && continue
-  [ "$i" == "curl" ] && { echo "$MODDIR/curl missing!" quit; }
-  echo "Downloading $i"
-  curl -o $MODDIR/$i https://github.com/Magisk-Modules-Repo/ccbins/master/$i-$ARCH32 & e_spinner
+  [ "$i" == "curl" ] && { echo -e "Curl missing!\nReinstall ccbins or copy curl to root of ccbins module folder!"; quit; }
+  (curl -o $MODDIR/$i https://github.com/Magisk-Modules-Repo/ccbins/master/$i-$ARCH32 & e_spinner "Downloading $i") && echo " - OK" || { echo " - Error"; quit; }
+  set_perm $MODDIR/$i 0 0 755
 done
 # DNS resolution fix for wireguard tunnels - use wireguard dns servers if specified
 if [ "$(pm list packages com.wireguard.android)" ] && [ "$(wg show)" ]; then
