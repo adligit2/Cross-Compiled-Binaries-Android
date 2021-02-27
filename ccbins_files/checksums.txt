@@ -33,7 +33,7 @@ bcd240736b4a2014891c8ab44c2ae559  bc/dc-x86
 719e83e8d730061d3be21ac05fac37a7  ccbins_files/ccbins
 1474461ae318b466f48a3763bd8645fa  ccbins_files/changelog.txt
 eb4730e366e6f4769b187237fb32a951  ccbins_files/includes-dynamic.txt
-540668f22e1e16614ccaa8809fbc7634  ccbins_files/includes.txt
+84161a4b6594213deef776b5f1bbb540  ccbins_files/includes.txt
 945dfa2f5474b700311f202d7df64695  ccbins_files/install.sh
 963b505462234b1966ab972143fc3899  ccbins_files/mod-util.sh
 6cb88e4e4fcb47ec16e6aa8ae10071e2  ccbins_files/module.prop
@@ -195,6 +195,10 @@ de7b7992394218b77218024a780ca613  iftop/dynamic/iftop-x86
 293cb2f98484ec182ec652a0f182bf95  iftop/dynamic/lib-arm64.zip
 b2df37f8489e22b304a39a0c20ec3f83  iftop/dynamic/lib-x64.zip
 9aae28fa1a7f813f0f70f85a11f8fbf4  iftop/dynamic/lib-x86.zip
+a7f347c475ab7a8be1c49aa3eb1261c7  iftop/iftop-arm
+3693db495a256365412a312ba87a905e  iftop/iftop-arm64
+986de2d0fdc12d202ff145283fd15806  iftop/iftop-x64
+667e7d9dd15f7f02c1709127ffc4d074  iftop/iftop-x86
 294a10540ce7ca19295bc17f35b905a5  iw/iw-arm
 f4e33e1dab442ed9ee2d2656ce754636  iw/iw-arm64
 b09ec5a6d4cda6869cbfb581f3efcad1  iw/iw-x64

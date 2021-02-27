@@ -51,7 +51,7 @@ The below table notes if the binary is compatible with android ndk. If static or
 | **grep**         | Yes       | Also includes egrep and fgrep, has full perl regex support |
 | **gzip**         | Yes       | Also includes gunzip and gzexe |
 | **htop**         | Yes       | |
-| **iftop**        | *Dynamic* | |
+| **iftop**        | Yes       | |
 | **libexpat**     | Yes       | |
 | **libidn2**      | Yes       | |
 | **libmagic**     | Yes       | |
