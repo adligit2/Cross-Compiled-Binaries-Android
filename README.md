@@ -5,7 +5,7 @@ This repo contains a variety of binaries cross compiled for android with Android
 You can find the build script for these in the [build_scripts folder](build_script).
 
 ## Currently includes:
-* Aria2 (v1.35.0) - static linked without root, use `--async-dns --async-dns-server=<yourdnserver,yourotherdnsserver>` (not needed for dynamic linked)
+* Aria2 (v1.35.0) - to use static linked without root, use `--async-dns --async-dns-server=<yourdnserver,yourotherdnsserver>` (not needed for dynamic linked)
 * Bash (v5.1.4)
 * Bc (v1.07.1)
 * Brotli (v1.0.9)
