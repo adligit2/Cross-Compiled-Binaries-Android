@@ -635,7 +635,10 @@ build_bin() {
       flags="--disable-shared $flags"
       ./configure CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS -static-libstdc++" \
         --host=$target_host \
-        $flags--prefix=$prefix \
+        $flags--prefix=/system \
+        --sbindir=/system/bin \
+        --libexecdir=/system/bin \
+        --datarootdir=/system/usr/share \
         --disable-nls \
         --without-ndiff \
         --without-zenmap \
@@ -887,6 +890,10 @@ build_bin() {
               rm -rf $prefix/share/nano; mkdir $prefix/usr; mv -f $prefix/share $prefix/usr/share
               git clone https://github.com/scopatz/nanorc $prefix/usr/share/nano
               rm -rf $prefix/usr/share/nano/.git; find $prefix/usr/share/nano -type f ! -name '*.nanorc' -delete
+              ;;
+      "nmap") make install -j$jobs DESTDIR=$prefix
+              [ $? -eq 0 ] || { echored "Build failed!"; exit 1; }
+              cp -rf $prefix/system/* $prefix; rm -rf $prefix/system
               ;;
       "openssl") make -j$jobs # Running just make install_sw will error out
                   [ $? -eq 0 ] || { echored "Build failed!"; exit 1; }
