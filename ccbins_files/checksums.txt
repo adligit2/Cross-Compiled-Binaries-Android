@@ -218,6 +218,7 @@ e64a42dcd178bca230a32fa882462e64  nethogs/nethogs-arm
 f7e8d295079cd9d8a59518f4e0aa7534  nethogs/nethogs-arm64
 0d9f5ec0e6b035fad000e6e97e0ce7f5  nethogs/nethogs-x64
 6b23c29aabecc7e95fff7e872e61a513  nethogs/nethogs-x86
+8edcf0450941f49e3e25d69992a737b7  nmap/dynamic/install.sh
 c033d1fe972a3ea48f58446b96a41b38  nmap/dynamic/ncat-arm
 0e7c1d9dded319d9dcd57396ea78dd82  nmap/dynamic/ncat-arm64
 0a4689860093759255898b0df3fb6b7a  nmap/dynamic/ncat-x64
