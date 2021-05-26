@@ -37,7 +37,7 @@ bcd240736b4a2014891c8ab44c2ae559  bc/dc-x86
 945dfa2f5474b700311f202d7df64695  ccbins_files/install.sh
 963b505462234b1966ab972143fc3899  ccbins_files/mod-util.sh
 6cb88e4e4fcb47ec16e6aa8ae10071e2  ccbins_files/module.prop
-e28a73a2a9b621483b42c3d492628231  ccbins_files/service.sh
+fbdee98b6b98ca738cf9c89178d76510  ccbins_files/service.sh
 bf708c2c427f361ec24637bf8065d378  coreutils/coreutils-arm
 e600594074f2655d29a086b9cee8bfcc  coreutils/coreutils-arm64
 15f132c9bd16c4e261529d3251c739e5  coreutils/coreutils-x64
