@@ -56,7 +56,7 @@ a8ee1790afb22f04898f5afdd7f371cd  curl/dynamic/install.sh
 cc1b042754f36432a0c7adf797b04f29  curl/curl-arm64
 b3c86ae652abb03d4e6fb3c1fd438216  curl/curl-x64
 2f73da0a824443f3caeca92b3e353220  curl/curl-x86
-c7c503ba31e39bc43b29c239fa84de31  curl/install.sh
+48ebc0cb77aae71e57b9b1922edbc2a9  curl/install.sh
 8713c109dd816f0688a2a5960e985155  diffutils/cmp-arm
 a813d52475893fd5d13d2206178cdab8  diffutils/cmp-arm64
 313d6c59b92745c403ade437f16d43a1  diffutils/cmp-x64
