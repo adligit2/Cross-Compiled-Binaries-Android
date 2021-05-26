@@ -7,7 +7,7 @@ until [ "$(getprop sys.boot_completed)" == "1" ] && [ -d /storage/emulated/0/And
   sleep 1
 done
 [ -f /storage/emulated/0/.aliases ] || touch /storage/emulated/0/.aliases
-if [ "$(grep 'Coreutils' .installed)" ]; then
+if [ "$(grep 'Coreutils' $MODPATH/.installed)" ]; then
   grep -q 'alias cp=' /storage/emulated/0/.aliases 2>/dev/null || echo "alias cp='cp -g'" >> /storage/emulated/0/.aliases
   grep -q 'alias mv=' /storage/emulated/0/.aliases 2>/dev/null || echo "alias mv='mv -g'" >> /storage/emulated/0/.aliases
 else
