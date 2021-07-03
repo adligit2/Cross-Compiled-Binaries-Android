@@ -39,7 +39,7 @@ You can find the build script for these in the [build_scripts folder](build_scri
 * Strace (v5.12)
 * Tar (v1.34)
 * Tcpdump (v4.99.1)
-* Vim (v8.2.3094)
+* Vim (v8.2.3095)
 * Wavemon (v0.9.3) - note that your kernel must have wireless extensions enabled (which most android ones don't). [See here](https://github.com/uoaerg/wavemon#dependencies) [and here](https://github.com/uoaerg/wavemon/blob/master/wavemon.1#L129) for more details
 * Xmlstarlet
 * Xxd (v1.10)
