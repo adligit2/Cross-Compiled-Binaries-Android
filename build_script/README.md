@@ -55,7 +55,6 @@ The below table notes if the binary is compatible with android ndk. If static or
 | **libexpat**     | Yes       | |
 | **libidn2**      | Yes       | |
 | **libmagic**     | Yes       | |
-| **libmetalink**  | Yes       | |
 | **libnl**        | Yes       | |
 | **libpcap**      | Yes       | |
 | **libpsl**       | Yes       | |
