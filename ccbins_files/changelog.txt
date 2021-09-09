@@ -1,6 +1,3 @@
-22 - 9.9.2021
-* Add detection/message if using termux
-
 21 - 2.13.2021
 * Added check for required binaries
 * Fix for connection issues when running wireguard

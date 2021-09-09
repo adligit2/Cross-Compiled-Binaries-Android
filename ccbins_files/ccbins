@@ -48,7 +48,7 @@ quit() {
   exit 0
 }
 
-scriptver=22
+scriptver=21
 branch=testing
 # Doh workaround for dns poisoning
 [ -f $MODDIR/doh ] && { flag=" --doh-url $(tail -n1 $MODDIR/doh)"; doh="$(head -n1 $MODDIR/doh)"; }
@@ -717,9 +717,6 @@ while true; do
   [ -s $MODDIR/.installed ] && echo "8: Backup current config"
   [ -d $bakloc ] && echo -e "9: Restore last config\n10: Erase backup config"
   echo "Type 'q' at any time to quit"
-  if grep -q 'termux' "$SHELL"; then
-    echo -e "\nTermux detected!\nDynamic linked binaries may not work properly in termux!"
-  fi
   while true; do
     read -r choice?'--> '
     echo " "
